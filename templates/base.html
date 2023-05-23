@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Skip - Social Network App</title>
+
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/feather.css' %}">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/emoji.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+
+</head>
+
+<body class="color-theme-blue mont-font theme-dark">
+    <div class="preloader"></div>
+
+    
+        <div class="main-wrapper">
+
+        {% include 'include/header.html' %}
+
+        {% block content %}
+        
+        
+        {% endblock content %}
+
+        {% include 'include/footer.html' %}

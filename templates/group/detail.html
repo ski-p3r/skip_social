@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+   
+        <!-- main content -->
+        <div class="main-content right-chat-active">
+            
+            <div class="middle-sidebar-bottom">
+                <div class="middle-sidebar-left">
+                    <div class="row">
+                        <div class="col-xl-4 col-xxl-3 col-lg-4 pe-0">
+                            <div class="card w-100 shadow-xss rounded-xxl overflow-hidden border-0 mb-3 mt-3 pb-3">
+                                <div class="card-body position-relative h150 bg-image-cover bg-image-center" style="background-image: url(../../../static/images/bb-9.jpg);"></div>
+                                <div class="card-body d-block pt-4 text-center">
+                                    <figure class="avatar mt--6 position-relative w75 z-index-1 w100 z-index-1 ms-auto me-auto"><img src="{{username.group_img.url}}" alt="image" class="p-1 bg-white rounded-xl w-100"></figure>
+                                    <h4 class="font-xs ls-1 fw-700 text-grey-900">{{username.group_name}} <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{username.desc}}</span></h4>
+                                </div>
+                                <div class="card-body d-flex align-items-center justify-content-center ps-4 pe-4 pt-0">
+                                {% if request.user == username.creator.user %}
+                                    <a class="bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">You are Ouner</a>
+                                    <a href="{% url 'leave_group' username %}" class="bg-danger p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Leave Group</a>
+                                {% else %}
+                                    {% if group_member %}
+                                    <a href="{% url 'leave_group' username %}" class="bg-danger p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Leave Group</a>
+                                    {% else %}
+                                    <a href="{% url 'join_group' username %}" class="bg-primary p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Join Group</a>
+                                    {% endif %}
+                                
+                                {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="card w-100 shadow-xss rounded-xxl overflow-hidden border-0 mb-3 mt-3 pb-3">
+                                <div class="card-body position-relative h150 bg-image-cover bg-image-center" style="background-image: url(../../../static/images/bb-9.jpg);"></div>
+                                <div class="card-body d-block pt-4 text-center">
+                                    <figure class="avatar mt--6 position-relative w75 z-index-1 w100 z-index-1 ms-auto me-auto"><img src="{{username.creator.product_img.url}}" alt="image" class="p-1 bg-white rounded-xl w-100"></figure>
+                                    <h4 class="font-xs ls-1 fw-700 text-grey-900">{{username.creator.user.full_name}}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{username.creator.user.email}}</span></h4>
+                                    <h4 class="font-xs ls-1 fw-700 text-grey-900"><span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">Creator of This Group</span></h4>
+                                </div>
+                                <div class="card-body d-flex align-items-center ps-4 pe-4 pt-0">
+                                    <h4 class="font-xsssss text-center text-grey-500 fw-600 ms-2 me-2"><b class="text-grey-900 mb-1 font-xss fw-700 d-inline-block ls-3 text-dark">{{posts}}</b> Posts</h4>
+                                    <h4 class="font-xsssss text-center text-grey-500 fw-600 ms-2 me-2"><b class="text-grey-900 mb-1 font-xss fw-700 d-inline-block ls-3 text-dark">{{follower}} </b> Followers</h4>
+                                    <h4 class="font-xsssss text-center text-grey-500 fw-600 ms-2 me-2"><b class="text-grey-900 mb-1 font-xss fw-700 d-inline-block ls-3 text-dark">{{following}}</b> Follow</h4>
+                                </div>
+                                <div class="card-body d-flex align-items-center justify-content-center ps-4 pe-4 pt-0">
+                                    {% if request.user == username.creator.user %}
+                                    <a class="bg-warning p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">It's You</a>
+                                    {% else %}
+                                        {% if username.creator.user.email in friend_list %}
+                                        <a href="{% url 'remove_friend' username.creator.user.email %}" class="bg-danger p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Remove Friend</a>
+                                            {% if is_approveds or is_approved %}
+                                            <a href="{% url 'create_inbox' pp.user.username %}" class="bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i class="feather-mail font-md"></i></a>
+                                            {% endif %}
+                                        {% else %}
+                                        <a href="{% url 'add_friend' username.creator.user.email %}" class="bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
+                                <div class="card-body d-block p-4">
+                                    <h4 class="fw-700 mb-3 font-xsss text-grey-900">About</h4>
+                                    <p class="fw-500 text-grey-500 lh-24 font-xssss mb-0">{{profile.desc}}</p>
+                                </div>
+                                <div class="card-body border-top-xs d-flex">
+                                    <i class="feather-lock text-grey-500 me-3 font-lg"></i>
+                                    <h4 class="fw-700 text-grey-900 font-xssss mt-0">Private <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">What's up, how are you?</span></h4>
+                                </div>
+
+                                <div class="card-body d-flex pt-0">
+                                    <i class="feather-eye text-grey-500 me-3 font-lg"></i>
+                                    <h4 class="fw-700 text-grey-900 font-xssss mt-0">Visble <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">Anyone can find you</span></h4>
+                                </div>
+                                <div class="card-body d-flex pt-0">
+                                    <i class="feather-map-pin text-grey-500 me-3 font-lg"></i>
+                                    <h4 class="fw-700 text-grey-900 font-xssss mt-1">{{address.full_address}}</h4>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="col-xl-8 col-xxl-9 col-lg-8">
+                            {% if group_member %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3 mt-3">
+                                <div class="card-body p-0">
+                                    <a class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"><i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post</a>
+                                </div>
+                                <form action="{% url 'create_group_post' username %}" id="my_form" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="card-body p-0 mt-3 position-relative">
+                                        {% if profile %}
+                                        <figure class="avatar position-absolute ms-2 mt-1 top-5"><img src="{{profile.product_img.url}}" alt="image" class="shadow-sm rounded-circle w30" style="border-radius: 50%;"></figure>
+                                        {% else %}
+                                        <figure class="avatar position-absolute ms-2 mt-1 top-5"><img src="{% static 'images/user-8.png' %}" alt="image" class="shadow-sm rounded-circle w30"></figure>
+                                        {% endif %}
+                                        <input type="text" name="message" class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" cols="30" rows="10" placeholder="What's on your mind?"></input>
+                                        
+                                    </div>
+                                    <div class="card-body d-flex p-0 mt-0"> 
+                                        <input name="image_man" id="upload-file" type="file"/>
+                                        <a class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i class="font-md text-success feather-image me-2"></i><span class="d-none-xs">Photo</span></a>
+                                    </div>
+                                    <a class="feather-send text-grey-500 font-md" onclick="document.getElementById('my_form').submit();"></a>
+                                    
+                                </form>
+                            </div>
+                            {% endif %}
+
+
+                            {% for i in post %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-0">
+                                <div class="card-body p-0 d-flex">
+                                    <figure class="avatar me-3"><img src="{{i.profile.product_img.url}}" alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                    <a href="{% url 'authors_post' i.user.username %}"><h4 class="fw-700 text-grey-900 font-xssss mt-1">{{ i.user.full_name }}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{ i.created_date }}</span></h4></a>
+                                    
+                                </div>
+                                <div class="card-body p-0 me-lg-5">
+                                    <p class="fw-500 text-grey-500 lh-26 font-xssss w-100 mb-2">{{ i.text }}</p>
+                                </div>
+                                <div class="card-body d-block p-0 mb-3">
+                                    <div class="row ps-2 pe-2">
+                                        <div class="col-sm-12 p-1"> <img src="{{ i.images.url }}" class="rounded-3 w-100" alt="image"></div>                                        
+                                    </div>
+                                </div>
+                                 
+                            </div>
+                            <br>
+                        {% endfor %}
+
+                        </div> 
+
+
+                    </div>
+                </div>
+                 
+            </div>            
+        </div>
+        <!-- main content -->
+
+{% endblock %}

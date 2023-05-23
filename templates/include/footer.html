@@ -1,0 +1,25 @@
+ {% load static %}
+ <div class="app-header-search">
+            <form action="{% url 'search' %}" class="search-form" method="GET">
+                <div class="form-group searchbox mb-0 border-0 p-1">
+                    <input type="text" name="keyword" class="form-control border-0" placeholder="Search...">
+                    <i class="input-icon">
+                        <ion-icon name="search-outline" role="img" class="md hydrated" aria-label="search outline"></ion-icon>
+                    </i>
+                    <a href="#" class="ms-1 mt-1 d-inline-block close searchbox-close">
+                        <i class="ti-close font-xs"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div> 
+    <script src="{% static 'js/plugin.js' %}"></script>
+
+    <script src="{% static 'js/lightbox.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+    
+</body>
+
+</html>

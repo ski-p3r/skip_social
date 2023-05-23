@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+   
+        <!-- main content -->
+        <div class="main-content right-chat-active">
+            
+            <div class="middle-sidebar-bottom">
+                <div class="middle-sidebar-left">
+                    <!-- loader wrapper -->
+                    <div class="preloader-wrap p-3">
+                        <div class="box shimmer">
+                            <div class="lines">
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="box shimmer mb-3">
+                            <div class="lines">
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="box shimmer">
+                            <div class="lines">
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- loader wrapper -->
+                    <div class="row feed-body">
+                        <div class="col-xl-8 col-xxl-9 col-lg-8">
+                            {% if request.user.is_admin %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
+                                <div class="card-body p-0">
+                                    <a class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"><i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post</a>
+                                </div>
+                                <form action="{% url 'create_post' %}" id="my_form" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="card-body p-0 mt-3 position-relative">
+                                        {% if profile %}
+                                        <figure class="avatar position-absolute ms-2 mt-1 top-5"><img src="{{profile.product_img.url}}" alt="image" class="shadow-sm rounded-circle w30" style="border-radius: 50%;"></figure>
+                                        {% else %}
+                                        <figure class="avatar position-absolute ms-2 mt-1 top-5"><img src="{% static 'images/user-8.png' %}" alt="image" class="shadow-sm rounded-circle w30"></figure>
+                                        {% endif %}
+                                        <input type="text" name="message" class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" cols="30" rows="10" placeholder="What's on your mind?"></input>
+                                        
+                                    </div>
+                                    <div class="card-body d-flex p-0 mt-0"> 
+                                        <input name="image_man" id="upload-file" type="file"/>
+                                        <a class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i class="font-md text-success feather-image me-2"></i><span class="d-none-xs">Photo</span></a>
+                                    </div>
+                                    <a class="feather-send text-grey-500 font-md" onclick="document.getElementById('my_form').submit();"></a>
+                                    
+                                </form>
+                            </div>
+                            {% endif %}
+
+
+                        {% if post %}
+                        {% for i in post %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-0">
+                                <div class="card-body p-0 d-flex">
+                                    <figure class="avatar me-3"><img src="{{i.profile.product_img.url}}" alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                    <a href="{% url 'authors_post' i.user.username %}"><h4 class="fw-700 text-grey-900 font-xssss mt-1">{{ i.user.full_name }}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{ i.created_date }}</span></h4></a>
+                                    
+                                </div>
+                                <div class="card-body p-0 me-lg-5">
+                                    <p class="fw-500 text-grey-500 lh-26 font-xssss w-100 mb-2">{{ i.text }}</p>
+                                </div>
+                                <div class="card-body d-block p-0 mb-3">
+                                    <div class="row ps-2 pe-2">
+                                        <div class="col-sm-12 p-1"> <img src="{{ i.images.url }}" class="rounded-3 w-100" alt="image"></div>                                        
+                                    </div>
+                                </div>
+                                 
+                            </div>
+                            <br>
+                        {% endfor %}
+                        {% endif %}
+
+
+                        </div> 
+                        <div class="col-xl-4 col-xxl-3 col-lg-4 ps-lg-0">
+                            {% if friend_request %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
+                                <div class="card-body d-flex align-items-center p-4">
+                                    <h4 class="fw-700 mb-0 font-xssss text-grey-900">Friend Request</h4>
+                                    <a href="default-member.html" class="fw-600 ms-auto font-xssss text-primary">See all</a>
+                                </div>
+                                {% for i in friend_request %}
+                                <div class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0">
+                                    <figure class="avatar me-3"><img src="{{i.adder.product_img.url}}" alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                    <h4 class="fw-700 text-grey-900 font-xssss mt-1">{{i.adder.user.full_name}}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{i.adder.user.email}}</span></h4>
+                                </div>
+                                <div class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4">
+                                    <a href="{% url 'confirm_friend' i.adder.user.email %}" class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl">Confirm</a>
+                                    <a href="{% url 'remove_friend_request' i.adder.user.email %}" class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl">Delete</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% if confirmed_friends %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 p-0 ">
+                                <div class="card-body d-flex align-items-center p-4 mb-0">
+                                    <h4 class="fw-700 mb-0 font-xssss text-grey-900">Confirm Friend</h4>
+                                    <a href="default-member.html" class="fw-600 ms-auto font-xssss text-primary">See all</a>
+                                </div>
+                                {% for i in confirmed_friends %}
+                                    <div class="card-body bg-transparent-card d-flex p-3 bg-greylight ms-3 me-3 rounded-3">
+                                        <figure class="avatar me-2 mb-0"><img src="{{i.adder.product_img.url}}" alt="image" class="shadow-sm rounded-circle w45"></figure>
+                                        <h4 class="fw-700 text-grey-900 font-xssss mt-2">{{i.adder.user.full_name}}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">12 mutual friends</span></h4>
+                                        <a href="#" class="btn-round-sm bg-white text-grey-900 feather-chevron-right font-xss ms-auto mt-2"></a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>   
+
+                    </div>
+                </div>
+                
+            </div>            
+        </div>
+        <!-- main content -->
+
+{% endblock %}

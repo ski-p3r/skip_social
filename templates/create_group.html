@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+   
+        <!-- main content -->
+        <div class="main-content right-chat-active">
+            
+            <div class="middle-sidebar-bottom">
+                <div class="middle-sidebar-left">
+                    <!-- loader wrapper -->
+                    <div class="preloader-wrap p-3">
+                        <div class="box shimmer">
+                            <div class="lines">
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="box shimmer mb-3">
+                            <div class="lines">
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="box shimmer">
+                            <div class="lines">
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                                <div class="line s_shimmer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- loader wrapper -->
+                    <div class="row feed-body">
+                        <div class="col-xl-8 col-xxl-9 col-lg-8">
+                            {% if request.user.is_authenticated %}
+                            <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
+                                <div class="card-body p-0">
+                                    <a class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"><i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Group</a>
+                                </div>
+                                <form action="{% url 'create_group' %}" id="my_form" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="card-body p-0 mt-3 position-relative">
+                                        {% if profile %}
+                                        <figure class="avatar position-absolute ms-2 mt-1 top-5"><img src="{{profile.product_img.url}}" alt="image" class="shadow-sm rounded-circle w30" style="border-radius: 50%;"></figure>
+                                        {% else %}
+                                        <figure class="avatar position-absolute ms-2 mt-1 top-5"><img src="{% static 'images/user-8.png' %}" alt="image" class="shadow-sm rounded-circle w30"></figure>
+                                        {% endif %}
+                                        <input type="text" name="group_name" class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" cols="30" rows="10" placeholder="Write Name for your group"></input>
+                                        
+                                    </div>
+                                    <div class="card-body p-0 mt-3 position-relative">
+                                        <input type="text" name="desc" class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg" cols="30" rows="10" placeholder="Write Description for your group"></input>
+                                        
+                                    </div>
+                                    <div class="card-body d-flex p-0 mt-0"> 
+                                        <input name="group_pic" id="upload-file" type="file"/>
+                                        <a class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i class="font-md text-success feather-image me-2"></i><span class="d-none-xs">Photo</span></a>
+                                    </div>
+                                    <a class="feather-send text-grey-500 font-md" onclick="document.getElementById('my_form').submit();"></a>
+                                    
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>   
+
+                    </div>
+                </div>
+                
+            </div>            
+        </div>
+        <!-- main content -->
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+   
+        <!-- main content -->
+        <div class="main-content right-chat-active">
+            
+            <div class="middle-sidebar-bottom">
+                <div class="middle-sidebar-left pe-0">
+                    <div class="row">
+                           
+                        <div class="col-xl-12">
+                            <div class="chat-wrapper p-3 w-100 position-relative scroll-bar bg-white theme-dark-bg">
+                                <h2 class="fw-700 mb-4 mt-2 font-md text-grey-900 d-flex align-items-center">Messages
+                                    <a> </a></h2>
+                                    
+                                
+                                    
+                                <ul class="notification-box">
+                                    {% for i in message %}
+                                    <li>
+                                        {% if request.user != i.sender.user %}
+                                        <a href="{% url 'message_inbox' i.send_name %}" class="d-flex align-items-center p-3 rounded-3">
+                                            <img src="{{ i.sender.product_img.url }}" alt="user" class="w45 me-3" style="border-radius: 50%;">
+                                            <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20"><strong>{{i.sender.user.full_name}}</strong><span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto">{{i.receiver.user.email}}</span></h6>
+                                            
+                                        </a>
+                                        {% elif request.user != i.receiver %}
+                                        <a href="{% url 'message_inbox' i.send_name %}" class="d-flex align-items-center p-3 rounded-3">
+                                            <img src="{{ i.receiver.product_img.url }}" alt="user" class="w45 me-3">
+                                            <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20" style="border-radius: 50%;"><strong>{{i.receiver.user.full_name}}</strong><span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto"> {{i.receiver.user.email}}</span></h6>
+                                            
+                                        </a>
+                                        {% endif %}
+                                    </li>
+                                    
+                                    
+                                    {% endfor %}
+                                </ul>                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                 
+            </div>            
+        </div>
+        <!-- main content -->
+
+{% endblock %}
