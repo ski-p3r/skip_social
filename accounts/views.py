@@ -19,9 +19,8 @@ from contact.models import SocialNetwork, Address
 
 def register(request):
     if request.method == 'POST':
-        full_name = request.POST['full_name']
-        first_name  = full_name.split(' ')[0]
-        last_name  = full_name.split(' ')[1]
+        first_name  = request.POST['first_name']
+        last_name  = request.POST['last_name']
         email      = request.POST['email']
         password   = request.POST['password']
         phone_number   = request.POST['phone_number']

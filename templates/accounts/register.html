@@ -26,11 +26,7 @@
 
         <div class="nav-header bg-transparent shadow-none border-0">
             <div class="nav-top w-100">
-                <a href="index.html"><i class="feather-zap text-success display1-size me-2 ms-0"></i><span class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Skip. </span> </a>
-                <a href="#" class="mob-menu ms-auto me-2 chat-active-btn"><i class="feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight"></i></a>
-                <a href="default-video.html" class="mob-menu me-2"><i class="feather-video text-grey-900 font-sm btn-round-md bg-greylight"></i></a>
-                <a href="#" class="me-2 menu-search-icon mob-menu"><i class="feather-search text-grey-900 font-sm btn-round-md bg-greylight"></i></a>
-                <button class="nav-menu me-0 ms-2"></button>
+                <a href="{% url 'home' %}"><i class="feather-zap text-success display1-size me-2 ms-0"></i><span class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Skip. </span> </a>
 
                 <a href="{% url 'login' %}" class="header-btn d-none d-lg-block bg-dark fw-500 text-white font-xsss p-3 ms-auto w100 text-center lh-20 rounded-xl">Login</a>
                 <a href="{% url 'register' %}" class="header-btn d-none d-lg-block bg-current fw-500 text-white font-xsss p-3 ms-2 w100 text-center lh-20 rounded-xl" >Register</a>
@@ -57,7 +53,11 @@
                             {% csrf_token %}
                             <div class="form-group icon-input mb-3">
                                 <i class="font-sm ti-user text-grey-500 pe-0"></i>
-                                <input type="text" name='full_name' class="style2-input ps-5 form-control text-grey-900 font-xsss fw-600" placeholder="Your Full Name">                        
+                                <input type="text" name='first_name' class="style2-input ps-5 form-control text-grey-900 font-xsss fw-600" placeholder="Your First Name">                        
+                            </div>
+                            <div class="form-group icon-input mb-3">
+                                <i class="font-sm ti-user text-grey-500 pe-0"></i>
+                                <input type="text" name='last_name' class="style2-input ps-5 form-control text-grey-900 font-xsss fw-600" placeholder="Your Last Name">                        
                             </div>
                             <div class="form-group icon-input mb-3">
                                 <i class="font-sm ti-email text-grey-500 pe-0"></i>
@@ -72,22 +72,12 @@
                                 <i class="font-sm ti-lock text-grey-500 pe-0"></i>
                             </div>
                                     <div class="col-lg-12 mb-3">
-                                        <div class="card mt-3 border-0">
-                                            <div class="card-body d-flex justify-content-between align-items-end p-0">
-                                                <div class="form-group mb-0 w-100">
-                                                    <input type="file" name="image" id="file" class="input-file">
-                                                    <label for="file" class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
-                                                    <i class="ti-cloud-down large-icon me-3 d-block"></i>
-                                                    <span class="js-fileName">Drag and drop or click to replace</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <input type="file" name="image" id="file" class="input-file">
                                     </div>
                             
                             <div class="col-sm-12 p-0 text-left">
                                 <div class="form-group mb-1"><button type="submit" class="form-control text-center style2-input text-white fw-600 bg-dark border-0 p-0 ">Register</button></div>
-                                <h6 class="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">Already have account <a href="login.html" class="fw-700 ms-1">Login</a></h6>
+                                <h6 class="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">Already have account <a href="{% url 'login' %}" class="fw-700 ms-1">Login</a></h6>
                             </div>
                         </form>
                          

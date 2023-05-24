@@ -3,7 +3,9 @@
         <div class="nav-header bg-white shadow-xs border-0">
             <div class="nav-top">
                 <a href="{% url 'home' %}"><i class="feather-zap text-success display1-size me-2 ms-0"></i><span class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Skip. </span> </a>
-                <a href="#" class="mob-menu ms-auto me-2 menu-search-icon"><i class="feather-search text-grey-900 font-sm btn-round-md bg-greylight"></i></a> 
+                <a href="{% url 'message' %}" class="mob-menu ms-auto me-2 "><i class="feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight"></i></a>
+                <a href="{% url 'friend' %}" class="mob-menu me-2"><i class="feather-users text-grey-900 font-sm btn-round-md bg-greylight"></i></a>
+                <a href="#" class="me-2 menu-search-icon mob-menu"><i class="feather-search text-grey-900 font-sm btn-round-md bg-greylight"></i></a>
                 <button class="nav-menu me-0 ms-2"></button>
             </div>
             
@@ -14,7 +16,9 @@
                 </div>
             </form>
             <a href="{% url 'home' %}" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i {% if 'home' in request.path %}class="feather-home font-lg alert-primary btn-round-lg theme-dark-bg text-current "{% else %}class="feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "{% endif %}></i></a>
-            <a href="{% url 'friend' %}" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i {% if 'friend' in request.path %}class="feather-users font-lg alert-primary btn-round-lg theme-dark-bg text-current " {% else %}class="feather-users font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 " {% endif %}></i></a>
+            <a href="{% url 'friend' %}" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i {% if 'friend' in request.path %}class="feather-user font-lg alert-primary btn-round-lg theme-dark-bg text-current " {% else %}class="feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 " {% endif %}></i></a>
+            <a href="{% url 'message' %}" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i {% if 'message' in request.path %}class="feather-message-square font-lg alert-primary btn-round-lg theme-dark-bg text-current " {% else %}class="feather-message-square font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 " {% endif %}></i></a>
+            <a href="{% url 'group' %}" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i {% if 'group' in request.path %}class="feather-users font-lg alert-primary btn-round-lg theme-dark-bg text-current " {% else %}class="feather-users font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 " {% endif %}></i></a>
             
             <a href="{% url 'message' %}" class="p-2 text-center ms-auto menu-icon"><i class="feather-message-square font-xl text-current"></i></a>  
             <div class="p-2 text-center ms-3 position-relative dropdown-menu-icon menu-icon cursor-pointer">

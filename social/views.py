@@ -54,7 +54,6 @@ def author(request):
     username = Account.objects.get(username="manmuba80")
     usernames = Profile.objects.get(user=username)
     if username:
-        # username = get_object_or_404(Account, username=username)
         post = Post.objects.filter(user=username)
         post_count = post.count()
         profiles = Profile.objects.get(user=username)
@@ -76,7 +75,10 @@ def author(request):
             is_approved = Friend.objects.filter(adder=profile, added=usernames, is_approved=True).exists()
         except:
             is_approved = Friend.objects.filter(adder=usernames, added=profile, is_approved=True).exists()
-        # social = SocialNetwork.objects.get(user=username)
+        try:
+            social = SocialNetwork.objects.get(user=username)
+        except:
+            social = ''
         context = {
             'username': username,
             'usernames': usernames,
@@ -87,10 +89,9 @@ def author(request):
             'posts': posts,
             'is_approved':is_approved,
             'address': address,
-            # 'social': social,
+            'social': social,
             'profiles': profiles,
             'post': post,
             'post_count': post_count,
         }
     return render(request, 'accounts/author_admin.html', context)
-    # return HttpResponse(username.email)

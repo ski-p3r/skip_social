@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from contact.models import Address
 from friend.models import Friend
@@ -9,6 +10,7 @@ from post.models import Post
 
 # Create your views here.
 
+@login_required(login_url = 'login')
 def group(request):
     profile = Profile.objects.get(user=request.user)
     group_members = []
@@ -23,6 +25,7 @@ def group(request):
     }
     return render(request, 'group/index.html', context)
 
+@login_required(login_url = 'login')
 def group_detail(request, username):
     if username:
         username = get_object_or_404(Group, group_name=username)
@@ -51,7 +54,6 @@ def group_detail(request, username):
             'username': username,
             'group_member': group_member,
             'address':address,
-            # 'is_approveds': is_approveds,
             'is_approved':is_approved,
             'follower': follower,
             'following':following,
@@ -63,6 +65,7 @@ def group_detail(request, username):
         }
     return render(request, 'group/detail.html', context)
 
+@login_required(login_url = 'login')
 def create_group_post(request, username):
     if username:
         username = get_object_or_404(Group, group_name=username)
@@ -78,7 +81,8 @@ def create_group_post(request, username):
             post = GroupMessage.objects.create(user=user, text=text, profile=profile, images=images, group=username)
         post.save()
         return redirect(request.META.get('HTTP_REFERER'))
-    
+
+@login_required(login_url = 'login')
 def leave_group(request, username):
     if username:
         username = get_object_or_404(Group, group_name=username)
@@ -86,7 +90,8 @@ def leave_group(request, username):
         group_member = GroupMember.objects.get(group=username,member=profile)
         group_member.delete()
         return redirect(request.META.get('HTTP_REFERER'))
-    
+
+@login_required(login_url = 'login')
 def join_group(request, username):
     if username:
         username = get_object_or_404(Group, group_name=username)
@@ -95,6 +100,7 @@ def join_group(request, username):
         group_member.save()
         return redirect(request.META.get('HTTP_REFERER'))
     
+@login_required(login_url = 'login')
 def create_group(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
@@ -104,31 +110,9 @@ def create_group(request):
         group = Group.objects.create(creator=profile, group_name=group_name,group_img=group_pic, desc=desc)
         group.save()
         group_member = GroupMember.objects.create(group=group,member=profile)
+        group_member.save()
         return redirect('group')
     context = {
        'profile': profile,
     }
     return render(request, 'create_group.html', context)
-
-# def search_group(request):
-#     group_members = []
-#     profile = Profile.objects.get(user=request.user)
-#     context = {
-#         'profile': profile,
-#         'group_members': group_members
-#     }
-#     if 'keyword' in request.GET:
-#         keyword = request.GET['group_keyword']
-#         if keyword:
-#             groups = Group.objects.filter(Q(group_name__icontains=keyword) | Q(desc__icontains=keyword))
-#             group_member = GroupMember.objects.filter(member=profile)
-#             for i in group_member:
-#                 group_members.append(i.group.group_name)
-#             context = {
-#                 'groups': groups,
-#                 'profile': profile,
-#                 'group_members': group_members,
-#             }
-#             return render(request, 'group/index.html', context)
-#     return render(request, 'group/index.html', context)
-    
