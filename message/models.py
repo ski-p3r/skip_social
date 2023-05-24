@@ -20,15 +20,6 @@ class Send(models.Model):
     def __str__(self):
         return self.send_name
 
-class Unview(models.Model):
-    send    = models.ForeignKey(Send, on_delete=models.CASCADE)
-    user    = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    unviewed    = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f'{self.user.user.email}'
-    
-    
 
 class Message(models.Model):
     user        = models.ForeignKey(Send, on_delete=models.CASCADE)

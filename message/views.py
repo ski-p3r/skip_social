@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q,F
 from django.contrib.auth.decorators import login_required
 from accounts.models import Account
-from .models import Message, Send, Unview
+from .models import Message, Send
 from settings.models import Profile
 
 # Create your views here.
