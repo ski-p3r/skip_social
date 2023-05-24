@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Q
 from django.http import HttpResponse
 from contact.models import Address
 from friend.models import Friend
@@ -25,7 +26,11 @@ def group(request):
 def group_detail(request, username):
     if username:
         username = get_object_or_404(Group, group_name=username)
-        address = Address.objects.get(user=username.creator.user)
+        try:
+            address = Address.objects.get(user=username.creator.user)
+        except:
+            address = Address.objects.create(user=username.creator.user, country='Ethiopia', city='Adama', address='Adama')
+
         pp = Profile.objects.get(user=username.creator.user)
         post = GroupMessage.objects.filter(group=username).order_by('-created_date')
         user = request.user
@@ -46,7 +51,7 @@ def group_detail(request, username):
             'username': username,
             'group_member': group_member,
             'address':address,
-            'is_approveds': is_approveds,
+            # 'is_approveds': is_approveds,
             'is_approved':is_approved,
             'follower': follower,
             'following':following,
@@ -104,4 +109,26 @@ def create_group(request):
        'profile': profile,
     }
     return render(request, 'create_group.html', context)
+
+# def search_group(request):
+#     group_members = []
+#     profile = Profile.objects.get(user=request.user)
+#     context = {
+#         'profile': profile,
+#         'group_members': group_members
+#     }
+#     if 'keyword' in request.GET:
+#         keyword = request.GET['group_keyword']
+#         if keyword:
+#             groups = Group.objects.filter(Q(group_name__icontains=keyword) | Q(desc__icontains=keyword))
+#             group_member = GroupMember.objects.filter(member=profile)
+#             for i in group_member:
+#                 group_members.append(i.group.group_name)
+#             context = {
+#                 'groups': groups,
+#                 'profile': profile,
+#                 'group_members': group_members,
+#             }
+#             return render(request, 'group/index.html', context)
+#     return render(request, 'group/index.html', context)
     

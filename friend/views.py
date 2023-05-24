@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Q
 from settings.models import Profile
 from accounts.models import Account
 from .models import Friend
@@ -20,6 +21,29 @@ def friend(request):
     } 
     return render(request, 'friend/index.html', context)
 
+def confirmed_friend(request):
+    profile = Profile.objects.get(user=request.user)
+    friend_list = []
+    users = []
+
+    confirmed_friends = Friend.objects.filter((Q(added=profile) | Q(adder=profile)) & Q(is_approved=True)).order_by('-date_added')[:5]
+    for i in confirmed_friends:
+        if request.user.email == i.adder.user.email:
+            if i.added in users:
+                pass
+            else:
+                users.append(i.added)
+        elif request.user.email == i.added.user.email:
+            if i.adder in users:
+                pass
+            else:
+                users.append(i.adder)
+    context = {
+        'profile': profile,
+        'users':users,
+        'friend_list' : friend_list,
+    } 
+    return render(request, 'friend/index2.html', context)
 def add_friend(request, email):
     if email:
         user = Profile.objects.get(user=request.user)

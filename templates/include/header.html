@@ -13,7 +13,8 @@
                     <input type="text" name="keyword" placeholder="Start typing to search.." class="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 rounded-xl w350 theme-dark-bg">
                 </div>
             </form>
-            <a href="{% url 'home' %}" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i class="feather-home font-lg alert-primary btn-round-lg theme-dark-bg text-current "></i></a>
+            <a href="{% url 'home' %}" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i {% if 'home' in request.path %}class="feather-home font-lg alert-primary btn-round-lg theme-dark-bg text-current "{% else %}class="feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "{% endif %}></i></a>
+            <a href="{% url 'friend' %}" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i {% if 'friend' in request.path %}class="feather-users font-lg alert-primary btn-round-lg theme-dark-bg text-current " {% else %}class="feather-users font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 " {% endif %}></i></a>
             
             <a href="{% url 'message' %}" class="p-2 text-center ms-auto menu-icon"><i class="feather-message-square font-xl text-current"></i></a>  
             <div class="p-2 text-center ms-3 position-relative dropdown-menu-icon menu-icon cursor-pointer">
