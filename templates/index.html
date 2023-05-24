@@ -39,7 +39,7 @@
                     <!-- loader wrapper -->
                     <div class="row feed-body">
                         <div class="col-xl-8 col-xxl-9 col-lg-8">
-                            {% if request.user.is_admin %}
+                            {% if request.user.is_authenticated %}
                             <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
                                 <div class="card-body p-0">
                                     <a class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"><i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post</a>
@@ -118,7 +118,7 @@
                                 {% for i in confirmed_friends %}
                                     <div class="card-body bg-transparent-card d-flex p-3 bg-greylight ms-3 me-3 rounded-3">
                                         <figure class="avatar me-2 mb-0"><img src="{{i.adder.product_img.url}}" alt="image" class="shadow-sm rounded-circle w45"></figure>
-                                        <h4 class="fw-700 text-grey-900 font-xssss mt-2">{{i.adder.user.full_name}}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">12 mutual friends</span></h4>
+                                        <h4 class="fw-700 text-grey-900 font-xssss mt-2">{{i.adder.user.full_name}}<span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{i.adder.user.email}}</span></h4>
                                         <a href="#" class="btn-round-sm bg-white text-grey-900 feather-chevron-right font-xss ms-auto mt-2"></a>
                                     </div>
                                 {% endfor %}

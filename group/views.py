@@ -37,8 +37,10 @@ def group_detail(request, username):
         friend_lists = Friend.objects.filter(adder=profile)
         for i in friend_lists:
             friend_list.append(i.added.user.email)
-        is_approved = Friend.objects.filter(adder=profile, added=username.creator, is_approved=True).exists()
-        is_approveds = Friend.objects.filter(adder=username.creator, added=profile, is_approved=True).exists()
+        try:
+            is_approved = Friend.objects.filter(adder=profile, added=username.creator, is_approved=True).exists()
+        except:
+            is_approved = Friend.objects.filter(adder=username.creator, added=profile, is_approved=True).exists()
         group_member = GroupMember.objects.filter(group=username,member=profile).exists()
         context = {
             'username': username,

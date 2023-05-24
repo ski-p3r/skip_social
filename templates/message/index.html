@@ -21,17 +21,21 @@
                                 <ul class="notification-box">
                                     {% for i in message %}
                                     <li>
-                                        {% if request.user != i.sender.user %}
-                                        <a href="{% url 'message_inbox' i.send_name %}" class="d-flex align-items-center p-3 rounded-3">
-                                            <img src="{{ i.sender.product_img.url }}" alt="user" class="w45 me-3" style="border-radius: 50%;">
-                                            <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20"><strong>{{i.sender.user.full_name}}</strong><span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto">{{i.receiver.user.email}}</span></h6>
-                                            
+                                        {% if request.user != i.0.sender.user %}
+                                        <a href="{% url 'message_inbox' i.0.send_name %}" class="d-flex align-items-center p-3 rounded-3">
+                                            <img src="{{ i.0.sender.product_img.url }}" alt="user" class="w45 me-3" style="border-radius: 50%;">
+                                            <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20"><strong>{{i.0.sender.user.full_name}}</strong><span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto">{{i.0.sender.user.email}}</span></h6>
+                                            {% if i.1 %}
+                                                <i class=" text-white bg-primary-gradiant me-2 font-xs notification-react ms-auto" >{{i.1}}</i>
+                                            {% endif %}
                                         </a>
-                                        {% elif request.user != i.receiver %}
-                                        <a href="{% url 'message_inbox' i.send_name %}" class="d-flex align-items-center p-3 rounded-3">
-                                            <img src="{{ i.receiver.product_img.url }}" alt="user" class="w45 me-3">
-                                            <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20" style="border-radius: 50%;"><strong>{{i.receiver.user.full_name}}</strong><span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto"> {{i.receiver.user.email}}</span></h6>
-                                            
+                                        {% elif request.user != i.0.receiver %}
+                                        <a href="{% url 'message_inbox' i.0.send_name %}" class="d-flex align-items-center p-3 rounded-3">
+                                            <img src="{{ i.0.receiver.product_img.url }}" alt="user" class="w45 me-3">
+                                            <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20" style="border-radius: 50%;"><strong>{{i.0.receiver.user.full_name}}</strong><span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto"> {{i.0.receiver.user.email}}</span></h6>
+                                            {% if i.1 %}
+                                                <i class=" text-white bg-primary-gradiant me-2 font-xs notification-react ms-auto" >{{i.1}}</i>
+                                            {% endif %}
                                         </a>
                                         {% endif %}
                                     </li>

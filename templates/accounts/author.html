@@ -22,6 +22,18 @@
                             </div>
                         </div>
                         <div class="col-xl-4 col-xxl-3 col-lg-4 pe-0"> 
+                                    {% if request.user == profiles.user %}
+                                    <a class="bg-warning p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">It's You</a>
+                                    {% else %}
+                                        {% if profiles.user.email in friend_list %}
+                                        <a href="{% url 'remove_friend' profiles.user.email %}" class="bg-danger p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Remove Friend</a>
+                                            {% if is_approveds or is_approved %}
+                                            <a href="{% url 'create_inbox' profiles.user.username %}" class="bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i class="feather-mail font-md"></i></a>
+                                            {% endif %}
+                                        {% else %}
+                                        <a href="{% url 'add_friend' profiles.user.email %}" class="bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</a>
+                                        {% endif %}
+                                    {% endif %}
                             <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
                                 <div class="card-body d-block p-4">
                                     <h4 class="fw-700 mb-3 font-xsss text-grey-900">About</h4>

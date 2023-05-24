@@ -8,6 +8,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+
+from friend.models import Friend
 from .models import Account
 from post.models import Post
 from settings.models import Profile
@@ -71,7 +73,13 @@ def author(request, username):
         username = get_object_or_404(Account, username=username)
         post = Post.objects.filter(user=username)
         post_count = post.count()
+        friend_list = []
         profiles = Profile.objects.get(user=username)
+        friend_lists = Friend.objects.filter(adder=profile)
+        for i in friend_lists:
+            friend_list.append(i.added.user.email)
+        is_approved = Friend.objects.filter(adder=profile, added=profiles, is_approved=True).exists()
+        
         try:
             address = Address.objects.get(user=username)
         except:
@@ -82,6 +90,8 @@ def author(request, username):
             pass
     context = {
         'username': username,
+        'friend_list': friend_list,
+        'is_approved': is_approved,
         'profile': profile,
         'address': address,
         'social': social,

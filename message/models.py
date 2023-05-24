@@ -8,6 +8,7 @@ class Send(models.Model):
     sender      = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='send')
     receiver    = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='recieve')
     send_name   = models.CharField(max_length=50, unique=True)
+    # unviewed    = models.IntegerField(default=0)
     in_message  = models.BooleanField(default=False)
 
     def user(self):
@@ -18,6 +19,15 @@ class Send(models.Model):
 
     def __str__(self):
         return self.send_name
+
+class Unview(models.Model):
+    send    = models.ForeignKey(Send, on_delete=models.CASCADE)
+    user    = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    unviewed    = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.user.user.email}'
+    
     
 
 class Message(models.Model):
@@ -25,6 +35,7 @@ class Message(models.Model):
     messager    = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='messager')
     message     = models.TextField()
     created_date= models.DateTimeField(auto_now_add=True)
+    is_viewed   = models.BooleanField(default=False)
 
     def shot(self):
         return self.message[:20]
